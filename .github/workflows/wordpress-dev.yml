@@ -1,4 +1,4 @@
-name: Build, test and push wordpress image
+name: Wordpress DEV
 
 on:
   push:
