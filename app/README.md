@@ -1,7 +1,5 @@
 # WORDPRESS APP
 
-TEST
-
 ## Build the docker container
 
 - Docker build
