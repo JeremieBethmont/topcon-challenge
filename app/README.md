@@ -1,18 +1,35 @@
 # WORDPRESS APP
 
-TEST
+This is to illustrate a CI pipeline for Wordpress development.
 
-## Build the docker container
+## Development
 
-- Docker build
-docker build . -t topcon-wordpress
+The custom code would be place under `./custom-plugin` and `./custom-theme`. Then the github actions workflow builds, test and publishes the container based on the `Dockerfile`.
 
-## Push to ECR
-- Log docker into ecr repo
-aws ecr get-login-password | docker login --username AWS --password-stdin 881490094297.dkr.ecr.eu-west-1.amazonaws.com
+## Workflow Description
 
-- Tag the image for ECR
-docker tag topcon-wordpress:latest 881490094297.dkr.ecr.eu-west-1.amazonaws.com/topcon-challenge-dev:latest
+The Github workflow watches any commit to the `/app/*` directory on the `main` branch. And executed the operations described bellow by the cli equivalents.
+
+### Log into Amazon ECR
+
+- CLI equivalent:
+
+```
+aws ecr get-login-password | docker login --username AWS --password-stdin 881490094297.dkr.ecr.eu-west-1.amazonaws.co
+```
+
+### Build the docker container
+
+- CLI equivalent:
+  
+```
+docker build -t 881490094297.dkr.ecr.eu-west-1.amazonaws.com/topcon-challenge-dev:<GH_HASH> .
+```
+
+### Push the image to ECR
 
 - Push the image to repo
-docker push 881490094297.dkr.ecr.eu-west-1.amazonaws.com/topcon-challenge-dev:latest
+
+```
+docker push 881490094297.dkr.ecr.eu-west-1.amazonaws.com/topcon-challenge-dev:<GH_HASH>
+```

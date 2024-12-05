@@ -1,5 +1,5 @@
-FROM wordpress:apache
-WORKDIR /usr/src/wordpress
+FROM bitnami/wordpress:6
+WORKDIR /bitnami/wordpress
 
 # Copy code from custom development
 COPY custom-theme/ ./wp-content/themes/custom-theme/
