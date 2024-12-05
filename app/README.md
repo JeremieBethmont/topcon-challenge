@@ -15,7 +15,7 @@ The Github workflow watches any commit to the `/app/*` directory on the `main` b
 - CLI equivalent:
 
 ```
-aws ecr get-login-password | docker login --username AWS --password-stdin 881490094297.dkr.ecr.eu-west-1.amazonaws.co
+aws ecr get-login-password | docker login --username AWS --password-stdin 881490094297.dkr.ecr.eu-west-1.amazonaws.com
 ```
 
 ### Build the docker container

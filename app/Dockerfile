@@ -6,4 +6,4 @@ COPY custom-theme/ ./wp-content/themes/custom-theme/
 COPY custom-plugin/ ./wp-content/plugins/custom-plugin/
 
 # START APACHE
-CMD ["apache2-foreground"]
+CMD ["/opt/bitnami/scripts/apache/run.sh"]
