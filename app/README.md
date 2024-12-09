@@ -1,6 +1,6 @@
 # WORDPRESS APP
 
-This is to illustrate a CI pipeline for Wordpress development.
+This is to illustrate a CI pipeline for Wordpress development using Github Actions.
 
 In a real production environment the `app` directory should be hosted on a dedicated repository.
 
