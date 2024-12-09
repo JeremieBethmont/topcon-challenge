@@ -8,7 +8,6 @@ In a real production environment the `app` directory should be hosted on a dedic
 
 The custom code should be place under `./custom-plugin` and `./custom-theme`. Then the github actions workflow builds, test and publishes the container based on the `Dockerfile`.
 
-
 ## Workflow
 
 The Github workflow watches any commit to the `/app/*` directory on the `main` branch. And executed the operations described bellow by the cli equivalents. In a real produc
