@@ -9,7 +9,7 @@ on:
 
 permissions:
   id-token: write
-  contents: read
+  contents: write
 
 env:
   ECR_REPO: topcon-challenge-dev
