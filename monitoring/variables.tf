@@ -23,25 +23,10 @@ variable "env" {
   }
 }
 
-## EKS CLUSTER ##
+## MONITORING ##
 
-variable "vpc_cidr" {
-  description = "CIDR for VPC"
+variable "notification_email" {
+  description = "Email where to send alarms"
   type        = string
-  default     = "10.0.0.0/16"
-}
-
-variable "eks_node_groups" {
-  description = "Map of managed node groups config for EKS"
-  type        = map(any)
-  default = {
-    one = {
-      ami_type       = "AL2_x86_64"
-      instance_types = ["t3.small"]
-
-      min_size     = 1
-      max_size     = 5
-      desired_size = 3
-    }
-  }
+  default     = "jeremie.bethmont@pm.me"
 }

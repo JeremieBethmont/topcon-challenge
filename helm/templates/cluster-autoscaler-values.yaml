@@ -1,0 +1,8 @@
+rbac:
+    serviceAccount:
+        annotations:
+            eks.amazonaws.com/role-arn: ${role_arn}
+autoDiscovery:
+    clusterName: ${cluster}
+awsRegion: ${region}
+fullnameOverride: cluster-autoscaler

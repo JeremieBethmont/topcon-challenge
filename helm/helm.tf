@@ -3,38 +3,28 @@ resource "helm_release" "topcon-wordpress" {
   repository = "oci://registry-1.docker.io/bitnamicharts/"
   chart      = "wordpress"
 
-  set {
-    name  = "image.registry"
-    value = "881490094297.dkr.ecr.eu-west-1.amazonaws.com" # Should be pulled dynamically
-  }
+  values = [
+    templatefile("${path.module}/templates/wordpress-values.yaml", {
+      service        = var.service
+      env            = var.env
+      image_tag      = var.wordpress_image_tag
+      region         = data.aws_region.current.name
+      aws_account_id = data.aws_caller_identity.current.account_id
+    })
+  ]
+}
 
-  set {
-    name  = "image.repository"
-    value = "topcon-challenge-dev" # Should be pulled dynamically
-  }
+resource "helm_release" "cluster-autoscaler" {
+  name       = "cluster-autoscaler"
+  repository = "https://kubernetes.github.io/autoscaler"
+  chart      = "cluster-autoscaler"
+  namespace  = "kube-system"
 
-  set {
-    name  = "image.tag"
-    value = "b483060b16420825cb72bba5135966c800d70dac" # Should be pulled dynamically
-  }
-
-  set {
-    name  = "global.defaultStorageClass"
-    value = "gp2"
-  }
-
-  set {
-    name  = "mariadb.auth.rootPassword"
-    value = "secretpassword" # Could be pulled from secrets
-  }
-
-  set {
-    name  = "wordpressPassword"
-    value = "password" # Could be pulled from secrets
-  }
-
-  set {
-    name  = "wordpressUsername"
-    value = "admin"
-  }
+  values = [
+    templatefile("${path.module}/templates/cluster-autoscaler-values.yaml", {
+      cluster  = data.aws_eks_cluster.topcon-dev.id
+      region   = data.aws_region.current.name
+      role_arn = data.aws_iam_role.cluster-autoscaler.arn
+    })
+  ]
 }

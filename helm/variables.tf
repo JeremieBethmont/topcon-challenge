@@ -20,3 +20,11 @@ variable "env" {
     error_message = "Must be in: dev, stage, prod"
   }
 }
+
+## WORDPRESS VARIABLES ##
+
+variable "wordpress_image_tag" {
+  description = "Version tag of the wordpress container to deploy"
+  type        = string
+  default     = "latest"
+}

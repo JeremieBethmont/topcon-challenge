@@ -1,0 +1,17 @@
+global:
+  defaultStorageClass: gp2
+image:
+  registry: ${aws_account_id}.dkr.ecr.${region}.amazonaws.com
+  repository: ${service}-${env}
+  tag: ${image_tag}
+mariadb:
+  auth:
+    rootPassword: secretpassword # Could be pulled from secrets
+wordpressUsername: admin
+wordpressPassword: password # Could be pulled from secrets
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPU: 50
+  targetMemory: 50

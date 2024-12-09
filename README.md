@@ -2,16 +2,55 @@
 
 ## Challenge
 
-1. IaC test
-   
-- Provide infrastructure as code to deploy WordPress using containers (any container
+### IaC test
+
+**Instruction #1**
+
+> Provide infrastructure as code to deploy WordPress using containers (any container
 orchestrator) on a cloud provider of your choice (AWS and Terraform are preferred).
-- The service should be able to autoscale.
-- The infrastructure should notify by email if there is any issue.
+
+**Solution** 
+
+Follow instructions in `README` files for each section in this order:
+1. Deploy Infra: [infra](./infra/README.md)
+2. Deploy Monitoring: [monitoring](./monitoring/README.md)
+3. Build Wordpress: [app](./app/README.md)
+4. Deploy helm charts: [helm](./helm/README.md)
+
+**Comments**
+
+While I do not recommend using `Terraform` for deploying helm charts it has been used in this case for illustrating a deployment as per instructions. In production a more appropriate tool such as `ArgoCD` should be used.
+
+For simplicity, all the code has been divided accross folders and hosted on a single repository. However in a real production situation they should be hosted accross dedicated repositories for each environment e.g infra-dev, helm-dev, app-<name>-dev.
+
+**Instruction #2**
+
+> The service should be able to autoscale.
+
+**Solution**
+
+The wordpress service is deployed as part of a K8s "deployment" which is configured with autoscaling parameters. See values [here](./helm/templates/cluster-autoscaler-values.yaml).
+
+Also, the underlying would scale out using the `cluster-autoscaler` service if nodes become unschedulable.
+
+**Instruction #3**
+
+> The infrastructure should notify by email if there is any issue.
+
+**Solution**
+
+A cloudwatch alarm that watches EKS nodes for bad health check has been deployed. When in triggered state it sents an notification to an SNS topic which is subscribed to an email address.
+
+- [Cloudwatch alarm](./infra/cloudwatch.tf)
+- [SNS Topic](./infra/sns.tf)
+
+**Instruction #4**
+
+
 - We are looking to optimize infrastructure costs for a variable load, minimizing fixed costs
 Provide the code for the solution.
 
-2. CI/CD test
+### CI/CD test
 
 Write a brief textual answer on the following questions (around one page) and attach a diagram
 for a model CI/CD pipepline.
@@ -44,42 +83,3 @@ Gitlab, Github, etc.).
   - 
 
 
-## INFRASTRUCTURE
-
-### Base Infra Deployment
-
-Steps to deploy the base infrastructure with Terraform.
-
-The base infrastructure is composed of:
-- VPC
-- EKS Cluster
-
-1. Log into AWS Account
-2. Get in the `infra` directory
-```
-cd infra
-```
-3. Init terraform
-```
-terraform init
-```
-4. Review the plan (e.g no unexpected resource destruction)
-```
-terraform plan -var-file=variables.tfvars
-``` 
-5. Deploy the base infra
-```
-terraform apply -var-file=variables.tfvars
-```
---> The deployment will take ~15mins.
-6. Configure kubectl 
-```
-aws eks --region $(terraform output -raw region) update-kubeconfig \
-    --name $(terraform output -raw cluster_name)
-```
-
-## REFERENCES
-
-Infrastructure
-- https://developer.hashicorp.com/terraform/tutorials/kubernetes/eks
-- EKS Module https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest

@@ -7,6 +7,7 @@ module "eks" {
 
   cluster_endpoint_public_access           = true
   enable_cluster_creator_admin_permissions = true
+  enable_irsa                              = true
 
   cluster_addons = {
     aws-ebs-csi-driver = {
@@ -17,16 +18,7 @@ module "eks" {
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 
-  eks_managed_node_groups = {
-    one = {
-      ami_type       = "AL2_x86_64"
-      instance_types = ["t3.small"]
-
-      min_size     = 1
-      max_size     = 5
-      desired_size = 3
-    }
-  }
+  eks_managed_node_groups = var.eks_node_groups
 
   tags = local.tags
 }
