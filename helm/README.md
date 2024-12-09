@@ -9,4 +9,25 @@ Terraform was used in this case to statisfy the requirements of the "topcon chal
 | Helm Chart         | Type          | Description                                         | Ref Source                                                    |
 | ------------------ | ------------- | --------------------------------------------------- | ------------------------------------------------------------- |
 | bitnami/wordpress  | Application   | Custom wordpress app pulling image from private ECR | https://github.com/bitnami/charts/tree/main/bitnami/wordpress |
-| cluster-autoscaler | Infra service | Default cluster-autoscalaer deployment              | https://kubernetes.github.io/autoscaler /                     |
+| cluster-autoscaler | Infra service | Default cluster-autoscalaer deployment              | https://kubernetes.github.io/autoscaler                       |
+
+## Deployment Instructions
+
+Steps to deploy ALL the helm charts with Terraform.
+
+1. Log into AWS Account with AWS cli.
+```
+export AWS_DEFAULT_PROFILE=<PROFILE_NAME> 
+aws sso login --profile <PROFILE>
+```
+
+2. Initialise Terraform from the `infra` directory
+```
+terraform init
+```
+
+3. Review and apply the TF plan for "eks" module:
+```
+terraform plan
+terraform apply
+```
