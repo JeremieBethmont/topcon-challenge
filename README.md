@@ -83,6 +83,7 @@ answer)
 
 **Solution**
 
+![pipeline](./pipeline.png)
 
 **Step 1: Local Dev and Test**
 
@@ -144,6 +145,6 @@ Gitlab, Github, etc.).
 
 **Solution**
 
-Quick EXAMPLE of small CI code for Wordpress using Github Action: [](.github/workflows/wordpress-dev.yml).
+Quick example of small CI code for Wordpress using Github Action: [](.github/workflows/wordpress-dev.yml).
 
 This does not include any security or code quality testing for lack of time and lack of knowledge around wordpress development.
